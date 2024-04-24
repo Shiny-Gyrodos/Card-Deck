@@ -2,7 +2,7 @@ using System.Xml.Linq;
 
 public class Card
 {
-    public static int handLimit = 5; // Change when desired
+    public static int handLimit = 5; /// Change when desired, move to player class when created.
     static Random random = new Random();
     public static List<Card> deck = new List<Card>();
     public static List<Card> hand = new List<Card>();
@@ -45,7 +45,7 @@ public class Card
             CreateDeck();
         }
     }
-    public static void RemoveCardsFromHand(int howMany) /// Seperate player functions from deck functions in the future.
+    public static void RemoveCardsFromHand(int howMany) // Seperate player functions from deck functions in the future.
     {
         if (howMany > hand.Count)
         {

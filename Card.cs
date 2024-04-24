@@ -1,14 +1,15 @@
+using System.Xml.Linq;
+
 public class Card
 {
     public static int handLimit = 5; // Change when desired
     static Random random = new Random();
     public static List<Card> deck = new List<Card>();
-    public static Card[] hand = new Card[handLimit];
-    static int currentCard = 0;
+    public static List<Card> hand = new List<Card>();
     static int cardsInDeck;
-    public int value; // Parameter 1
-    public string suite; // Parameter 2
-    public string title; // Parameter 3
+    readonly int value; // Parameter 1
+    readonly string suite; // Parameter 2
+    readonly string title; // Parameter 3
     public Card(int value, string suite, string title)
     {
         this.value = value;
@@ -25,40 +26,55 @@ public class Card
             deck.Add(new Card(i, "spades", title[i - 2]));
             deck.Add(new Card(i, "hearts", title[i - 2]));
             deck.Add(new Card(i, "diamonds", title[i - 2]));
-
-            if (i == 10)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    deck.Add(new Card(i, "clubs", royalTitle[j]));
-                    deck.Add(new Card(i, "spades", royalTitle[j]));
-                    deck.Add(new Card(i, "hearts", royalTitle[j]));
-                }
-            }
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            deck.Add(new Card(10, "clubs", royalTitle[i]));
+            deck.Add(new Card(10, "spades", royalTitle[i]));
+            deck.Add(new Card(10, "hearts", royalTitle[i]));
+            deck.Add(new Card(10, "diamonds", royalTitle[i]));
         }
         cardsInDeck = deck.Count();
     }
-    public static void EraseDeck(bool createNewDeck) // Pass in "true" if you want the deck to be recreated
+    public static void EraseDeck(bool createNewDeck)
     {
         deck.Clear();
         
-        if (createNewDeck == true)
+        if (createNewDeck)
         {
             CreateDeck();
         }
     }
+    public static void RemoveCardsFromHand(int howMany) 
+    {
+        if (howMany > hand.Count)
+        {
+            howMany = hand.Count;
+        }
+        
+        for (int i = 0; i < howMany; i++)
+        {
+            hand.RemoveAt(i);
+        }
+    }
     public static void Draw(int howMany)
     {
+        if (handLimit > cardsInDeck)
+        {
+            handLimit = cardsInDeck;
+        }    
+
         for (int i = 1; i <= howMany; i++)
         {
-            try
+            if (hand.Count < handLimit)
             {
-                hand[currentCard] = deck[random.Next(0, cardsInDeck)]; // Code is tested as it might surpass hand limit
-                currentCard++;
+                Card selectedCard = deck[random.Next(0, cardsInDeck)];
+                hand.Add(selectedCard);
+                deck.Remove(selectedCard);
             }
-            catch
+            else
             {
-                Console.WriteLine("Hand limit reached");
+                Console.WriteLine("Hand limit reached.");
             }
         }
     }

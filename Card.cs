@@ -2,11 +2,8 @@ using System.Xml.Linq;
 
 public class Card
 {
-    public static int handLimit = 5; /// Change when desired, move to player class when created.
-    static Random random = new Random();
     public static List<Card> deck = new List<Card>();
-    public static List<Card> hand = new List<Card>();
-    static int cardsInDeck;
+    public static int cardsInDeck;
     public int value; // Parameter 1
     public string suite; // Parameter 2
     public string title; // Parameter 3
@@ -45,7 +42,16 @@ public class Card
             CreateDeck();
         }
     }
-    public static void RemoveCardsFromHand(int howMany) // Seperate player functions from deck functions in the future.
+}
+
+
+
+public abstract class Player // Abstract removes the ablitly to create an instance of the class.
+{
+    static Random random = new Random();
+    public static List<Card> hand = new List<Card>();
+    public static int handLimit = 5; /// Change when desired.
+    public static void RemoveCardsFromHand(int howMany)
     {
         if (howMany > hand.Count)
         {
@@ -57,20 +63,20 @@ public class Card
             hand.RemoveAt(i);
         }
     }
-    public static void Draw(int howMany)
+    public static void DrawCards(int howMany)
     {
-        if (handLimit > cardsInDeck)
+        if (handLimit > Card.cardsInDeck)
         {
-            handLimit = cardsInDeck;
+            handLimit = Card.cardsInDeck;
         }    
 
         for (int i = 1; i <= howMany; i++)
         {
             if (hand.Count < handLimit)
             {
-                Card selectedCard = deck[random.Next(0, cardsInDeck)];
+                Card selectedCard = Card.deck[random.Next(0, Card.cardsInDeck)];
                 hand.Add(selectedCard);
-                deck.Remove(selectedCard);
+                Card.deck.Remove(selectedCard);
             }
             else
             {

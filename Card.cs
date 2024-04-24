@@ -45,7 +45,7 @@ public class Card
             CreateDeck();
         }
     }
-    public static void RemoveCardsFromHand(int howMany) // Seperate player functions from deck functions in the future.
+    public static void RemoveCardsFromHand(int howMany) /// Seperate player functions from deck functions in the future.
     {
         if (howMany > hand.Count)
         {

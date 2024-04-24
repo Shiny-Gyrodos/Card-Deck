@@ -7,9 +7,9 @@ public class Card
     public static List<Card> deck = new List<Card>();
     public static List<Card> hand = new List<Card>();
     static int cardsInDeck;
-    readonly int value; // Parameter 1
-    readonly string suite; // Parameter 2
-    readonly string title; // Parameter 3
+    public int value; // Parameter 1
+    public string suite; // Parameter 2
+    public string title; // Parameter 3
     public Card(int value, string suite, string title)
     {
         this.value = value;
@@ -45,7 +45,7 @@ public class Card
             CreateDeck();
         }
     }
-    public static void RemoveCardsFromHand(int howMany) 
+    public static void RemoveCardsFromHand(int howMany) // Seperate player functions from deck functions in the future.
     {
         if (howMany > hand.Count)
         {

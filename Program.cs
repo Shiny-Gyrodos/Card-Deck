@@ -11,7 +11,7 @@ namespace MyApp
             
             foreach (Card card in Card.hand)
             {
-                Console.WriteLine($"{card.value} {card.suite} {card.title}");
+                Console.WriteLine($"You drew {card.title} of {card.suite}");
             }
             Console.ReadKey();
         }

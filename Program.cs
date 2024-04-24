@@ -7,9 +7,9 @@ namespace MyApp
         static void Main(string[] args)
         {
             Card.CreateDeck();
-            Card.Draw(5);
+            Player.DrawCards(5);
             
-            foreach (Card card in Card.hand)
+            foreach (Card card in Player.hand)
             {
                 Console.WriteLine($"You drew {card.title} of {card.suite}");
             }

@@ -1,9 +1,48 @@
 using System.Xml.Linq;
 
+public abstract class Deck 
+{   
+    public static List<Card> deck = [];
+    public static int cardsInDeck;
+    public static void Create()
+    {       
+        string[] titleOptions = {"two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "ace"};
+        string[] royalTitleOptions = {"jack", "queen", "king"};
+
+        for (int i = 2; i <= 11; i++)
+        {
+            deck.Add(new Card(i, "clubs", titleOptions[i - 2]));
+            deck.Add(new Card(i, "spades", titleOptions[i - 2]));
+            deck.Add(new Card(i, "hearts", titleOptions[i - 2]));
+            deck.Add(new Card(i, "diamonds", titleOptions[i - 2]));
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            deck.Add(new Card(10, "clubs", royalTitleOptions[i]));
+            deck.Add(new Card(10, "spades", royalTitleOptions[i]));
+            deck.Add(new Card(10, "hearts", royalTitleOptions[i]));
+            deck.Add(new Card(10, "diamonds", royalTitleOptions[i]));
+        }
+        cardsInDeck = deck.Count;
+    }
+
+    //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+    public static void Erase(bool createNewDeck)
+    {
+        deck.Clear();
+        
+        if (createNewDeck)
+        {
+            Create();
+        }
+    }
+}
+
+//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 public class Card
 {
-    public static List<Card> deck = new List<Card>();
-    public static int cardsInDeck;
     public int value; // Parameter 1
     public string suite; // Parameter 2
     public string title; // Parameter 3
@@ -13,38 +52,9 @@ public class Card
         this.suite = suite;
         this.title = title;
     }
-    public static void CreateDeck()
-    {
-        string[] title = {"two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "ace"};
-        string[] royalTitle = {"jack", "queen", "king"};
-        for (int i = 2; i <= 11; i++)
-        {
-            deck.Add(new Card(i, "clubs", title[i - 2]));
-            deck.Add(new Card(i, "spades", title[i - 2]));
-            deck.Add(new Card(i, "hearts", title[i - 2]));
-            deck.Add(new Card(i, "diamonds", title[i - 2]));
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            deck.Add(new Card(10, "clubs", royalTitle[i]));
-            deck.Add(new Card(10, "spades", royalTitle[i]));
-            deck.Add(new Card(10, "hearts", royalTitle[i]));
-            deck.Add(new Card(10, "diamonds", royalTitle[i]));
-        }
-        cardsInDeck = deck.Count();
-    }
-    public static void EraseDeck(bool createNewDeck)
-    {
-        deck.Clear();
-        
-        if (createNewDeck)
-        {
-            CreateDeck();
-        }
-    }
 }
 
-
+//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 public abstract class Player // Abstract removes the ablitly to create an instance of the class.
 {
@@ -63,20 +73,23 @@ public abstract class Player // Abstract removes the ablitly to create an instan
             hand.RemoveAt(i);
         }
     }
+
+    //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
     public static void DrawCards(int howMany)
     {
-        if (handLimit > Card.cardsInDeck)
+        if (handLimit > Deck.cardsInDeck)
         {
-            handLimit = Card.cardsInDeck;
+            handLimit = Deck.cardsInDeck;
         }    
 
         for (int i = 1; i <= howMany; i++)
         {
             if (hand.Count < handLimit)
             {
-                Card selectedCard = Card.deck[random.Next(0, Card.cardsInDeck)];
+                Card selectedCard = Deck.deck[random.Next(0, Deck.cardsInDeck)];
                 hand.Add(selectedCard);
-                Card.deck.Remove(selectedCard);
+                Deck.deck.Remove(selectedCard);
             }
             else
             {

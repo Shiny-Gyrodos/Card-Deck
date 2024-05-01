@@ -41,17 +41,11 @@ public abstract class Deck
 
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-public class Card
+public class Card(int value, string suite, string title)
 {
-    public int value; // Parameter 1
-    public string suite; // Parameter 2
-    public string title; // Parameter 3
-    public Card(int value, string suite, string title)
-    {
-        this.value = value;
-        this.suite = suite;
-        this.title = title;
-    }
+    public int Value { get; set; } = value;
+    public string Suite { get; set; } = suite;
+    public string Title { get; set; } = title;
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
